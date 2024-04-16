@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-namespace HorstmanBen.Lab6
+namespace Assets.Scripts
 {
     public class QuitHandler
     {

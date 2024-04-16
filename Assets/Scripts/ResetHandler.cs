@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-namespace HorstmanBen.Lab6
-{
+namespace Assets.Scripts { 
     public class ResetHandler
     {
         public ResetHandler(InputAction resetAction)

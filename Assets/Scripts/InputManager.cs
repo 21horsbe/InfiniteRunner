@@ -1,6 +1,5 @@
-using HorstmanBen;
 using UnityEngine;
-namespace HorstmanBen.Lab6
+namespace Assets.Scripts
 {
     public class InputManager : MonoBehaviour
     {
