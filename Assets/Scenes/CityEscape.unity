@@ -565,4 +565,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   environmentPrefab: {fileID: 7361240110428981661, guid: a6d716abc9338f643875eec4671a0927, type: 3}
-  obstaclePrefab: {fileID: 0}
+  obstacleFactory: {fileID: 1880815599}
+--- !u!1 &1880815598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1880815600}
+  - component: {fileID: 1880815599}
+  m_Layer: 0
+  m_Name: ObstacleFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1880815599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880815598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4343c76bd9b3da94bb16c6dbbf786ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullObstaclePrefab: {fileID: 4520068842380168472, guid: ed34b007fdd027546adb83aabad05e67, type: 3}
+  lowObstaclePrefab: {fileID: 8836812522439942926, guid: d3801a61581759e4fb6f5fc305904226, type: 3}
+  highObstaclePrefab: {fileID: 3787639611412430302, guid: a2f95c10852266b4e96f7095b95196de, type: 3}
+  coinPrefab: {fileID: 3043221245810493654, guid: d6ed01ac7ea2b9f4c9bc108e0cafc0c5, type: 3}
+--- !u!4 &1880815600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880815598}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

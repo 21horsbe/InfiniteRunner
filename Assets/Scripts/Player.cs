@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
     public class Player : MonoBehaviour
     {
         public int Lane;
+        public int Score = 0;
         private enum States { JUMPING, SLIDING, SWITCHING, IDLE }
         private States state;
         private List<Vector3> lanes;
@@ -32,7 +34,7 @@ namespace Assets.Scripts
                 transform.position = Vector3.MoveTowards(transform.position, lanes[Lane], step);
             }
 
-            if (transform.position == lanes[Lane])
+            if (AtRest())
             {
                 state = States.IDLE;
             }
@@ -44,6 +46,21 @@ namespace Assets.Scripts
                 {
                     StopSliding();
                 }
+            }
+
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+                Score++;
+                Debug.Log("Score: " + Score);
+                Destroy(other.gameObject);
             }
         }
 
@@ -64,7 +81,7 @@ namespace Assets.Scripts
         public void Jump() {
             if (state == States.IDLE)
             {
-                GetComponent<Rigidbody>().AddForce(Vector3.up * 5, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(Vector3.up * 8, ForceMode.Impulse);
                 state = States.JUMPING;
             }
         }
@@ -84,6 +101,19 @@ namespace Assets.Scripts
             transform.localScale = new Vector3(1,2,1);
             transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
             state = States.IDLE;
+        }
+
+        private bool AtRest()
+        {
+            Vector3 diff = transform.position - lanes[Lane];
+            if(Math.Abs(diff.x) < 0.05 
+                && Math.Abs(diff.y) < 0.05
+                && Math.Abs(diff.z) < 0.05)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -9,9 +9,6 @@ namespace Assets.Scripts
 {
     public abstract class MovingObject: MonoBehaviour
     {
-        //public abstract BoxCollider Collider { get; }
-        //public abstract float zPosition { get; }
-        //public abstract void ResetPosition();
         
     }
 }

@@ -11,9 +11,10 @@ namespace Assets.Scripts
     public class LevelManager: MonoBehaviour
     {
         [SerializeField] private GameObject environmentPrefab;
-        [SerializeField] private GameObject obstaclePrefab;
+        [SerializeField] private ObstacleFactory obstacleFactory;
         private List<GameObject> environment = new List<GameObject>();
-        private List<GameObject> obstacles;
+        private float nextWave = 0;
+
         void Start()
         {
             for (int i = 0; i < 8; i++)
@@ -23,8 +24,16 @@ namespace Assets.Scripts
                 prefab.AddComponent<EnvironmentPiece>();
                 environment.Add(prefab);
             }
+        }
 
-
+        private void Update()
+        {
+            nextWave += Time.deltaTime;
+            if(nextWave > 2)
+            {
+                nextWave = 0;
+                obstacleFactory.SpawnNextWave();
+            }
         }
     }
 }
