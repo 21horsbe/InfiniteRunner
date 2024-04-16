@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Player : MonoBehaviour, IPlayer
+    public class Player : MonoBehaviour
     {
         public int Lane;
         private enum States { JUMPING, SLIDING, SWITCHING, IDLE }
