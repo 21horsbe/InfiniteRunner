@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEditorInternal.VR;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -12,8 +14,13 @@ namespace Assets.Scripts
     {
         [SerializeField] private GameObject environmentPrefab;
         [SerializeField] private ObstacleFactory obstacleFactory;
-        private List<GameObject> environment = new List<GameObject>();
+        [SerializeField] private GameObject uiCanvas;
+
+        public static float speedMult = 1;
         private float nextWave = 0;
+        private int score;
+        private TextMeshProUGUI uiText;
+        private List<GameObject> environment = new List<GameObject>();
 
         void Start()
         {
@@ -24,16 +31,36 @@ namespace Assets.Scripts
                 prefab.AddComponent<EnvironmentPiece>();
                 environment.Add(prefab);
             }
+
+            // Example code from Unity Docs.
+            var myText = new GameObject();
+            myText.transform.parent = uiCanvas.transform;
+            myText.name = "UI";
+
+            uiText = myText.AddComponent<TextMeshProUGUI>();
+            uiText.text = "Score: 0\nCoins: 0";
+            uiText.fontSize = 50;
+
+            // Text position
+            var rectTransform = uiText.GetComponent<RectTransform>();
+            rectTransform.localPosition = new Vector3(0, 0, 0);
+            rectTransform.sizeDelta = new Vector2(850, 500);
+
+            speedMult = 1;
         }
 
         private void Update()
         {
             nextWave += Time.deltaTime;
-            if(nextWave > 2)
+            if(nextWave > 2 / speedMult)
             {
                 nextWave = 0;
                 obstacleFactory.SpawnNextWave();
+                speedMult += 0.05f;
             }
+
+            score++;
+            uiText.text = "Score: " + score + "\nCoins: " + Player.Coins;
         }
     }
 }

@@ -10,24 +10,31 @@ namespace Assets.Scripts
 {
     public class Player : MonoBehaviour
     {
+        [SerializeField] private float limbBaseSpeed = 40;
+        [SerializeField] private float speed = 0.01f;
+
         public int Lane;
-        public int Score = 0;
+        public static int Coins = 0;
+
         private enum States { JUMPING, SLIDING, SWITCHING, IDLE }
         private States state;
+        private float slideCounter = 0;
+        private float limbCounter = 0;
+        private Vector3 armRotateAround = new Vector3(0, 1.3f, 0);
+        private Vector3 legRotateAround = new Vector3(0, .7f, 0);
         private List<Vector3> lanes;
-        [SerializeField] private float speed = 0.01f;
-        private int slideCounter = 0;
 
         public void Awake()
         {
             state = States.IDLE;
             Lane = 1;
             lanes = new List<Vector3> { new Vector3(-5, 1, 0), new Vector3(0, 1, 0), new Vector3(5, 1, 0) };
+            Coins = 0;
         }
 
         public void Update()
         {
-            var step = speed * Time.deltaTime;
+            var step = speed * Time.deltaTime * LevelManager.speedMult;
 
             if (state == States.SWITCHING)
             {
@@ -41,13 +48,17 @@ namespace Assets.Scripts
 
             if (state == States.SLIDING)
             {
-                slideCounter++;
-                if (slideCounter == 500)
+                slideCounter += LevelManager.speedMult;
+                if (slideCounter >= 500)
                 {
                     StopSliding();
                 }
             }
 
+            if (state == States.SWITCHING || state == States.IDLE)
+            {
+                MoveLimbs();
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -58,8 +69,8 @@ namespace Assets.Scripts
             }
             else
             {
-                Score++;
-                Debug.Log("Score: " + Score);
+                Coins++;
+                Debug.Log("Score: " + Coins);
                 Destroy(other.gameObject);
             }
         }
@@ -89,7 +100,7 @@ namespace Assets.Scripts
         {
             if (state == States.IDLE) 
             { 
-                transform.localScale = Vector3.one;
+                transform.localScale = new Vector3(1, .5f, 1);
                 transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
                 state = States.SLIDING;
                 slideCounter = 0;
@@ -98,7 +109,7 @@ namespace Assets.Scripts
 
         private void StopSliding()
         {
-            transform.localScale = new Vector3(1,2,1);
+            transform.localScale = Vector3.one;
             transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
             state = States.IDLE;
         }
@@ -114,6 +125,29 @@ namespace Assets.Scripts
             }
 
             return false;
+        }
+        private void MoveLimbs()
+        {
+            var limbSpeed = Mathf.Clamp(limbBaseSpeed * LevelManager.speedMult, -100, 100);
+
+            Transform rightArm = transform.GetChild(1).GetChild(0);
+            Transform leftArm = transform.GetChild(1).GetChild(1);
+            rightArm.RotateAround(armRotateAround, Vector3.right, limbSpeed * Time.deltaTime);
+            leftArm.RotateAround(armRotateAround, Vector3.right, limbSpeed * Time.deltaTime * -1);
+
+
+            Transform rightLeg = transform.GetChild(1).GetChild(2);
+            Transform leftLeg = transform.GetChild(1).GetChild(3);
+            rightLeg.RotateAround(legRotateAround, Vector3.right, limbSpeed * Time.deltaTime * -1);
+            leftLeg.RotateAround(legRotateAround, Vector3.right, limbSpeed * Time.deltaTime);
+
+            limbCounter += Time.deltaTime;
+            if (limbCounter >= 0.5f)
+            {
+                limbCounter = -0.5f;
+                limbBaseSpeed *= -1;
+            }
+
         }
     }
 }

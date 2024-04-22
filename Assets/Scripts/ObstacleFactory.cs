@@ -42,7 +42,7 @@ namespace Assets.Scripts
                         numObstacles++;
                         break;
                     case 2:
-                        var prefab2 = GameObject.Instantiate<GameObject>(highObstaclePrefab, new Vector3(5f * i, 2.5f, 140), Quaternion.identity);
+                        var prefab2 = GameObject.Instantiate<GameObject>(highObstaclePrefab, new Vector3(5f * i, 2.75f, 140), Quaternion.identity);
                         prefab2.name = "High Obstacle" + (i + 1);
                         prefab2.AddComponent<Obstacle>();
                         numObstacles++;

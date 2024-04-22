@@ -17,7 +17,7 @@ namespace Assets.Scripts
         }
         public void Update()
         {
-            transform.position = Vector3.MoveTowards(transform.position, resetSpot, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, resetSpot, speed * Time.deltaTime * LevelManager.speedMult);
 
             if (transform.position == resetSpot)
             {
