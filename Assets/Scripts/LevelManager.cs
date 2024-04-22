@@ -32,19 +32,19 @@ namespace Assets.Scripts
                 environment.Add(prefab);
             }
 
-            // Example code from Unity Docs.
+            // Example code from Unity Docs. UI object.
             var myText = new GameObject();
             myText.transform.parent = uiCanvas.transform;
             myText.name = "UI";
 
             uiText = myText.AddComponent<TextMeshProUGUI>();
             uiText.text = "Score: 0\nCoins: 0";
-            uiText.fontSize = 50;
+            uiText.fontSize = 30;
 
             // Text position
             var rectTransform = uiText.GetComponent<RectTransform>();
             rectTransform.localPosition = new Vector3(0, 0, 0);
-            rectTransform.sizeDelta = new Vector2(850, 500);
+            rectTransform.sizeDelta = new Vector2(700, 400);
 
             speedMult = 1;
         }

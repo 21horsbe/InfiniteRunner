@@ -24,9 +24,9 @@ namespace Assets.Scripts
 
             for (int i = -1; i < 2; i++)
             {
-                if (numObstacles == 2) break;
+                if (numObstacles == 2) break; // Ensure wave can always be moved around
 
-                int random = (int) (rand.NextDouble() * 5);
+                int random = (int) (rand.NextDouble() * 5); // Randomly select obstacle
                 switch (random)
                 {
                     case 0:
